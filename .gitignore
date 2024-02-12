@@ -1,0 +1,11 @@
+# Debug Files
+*.class
+*.jar
+*.war
+
+# Log files
+*.log
+
+# After debugging folders
+target/
+build/
