@@ -1,11 +1,21 @@
-const dotenv=require('dotenv');
-const port = 3000;
+const mongoose = require('mongoose');
+const dotenv = require('dotenv');
 const app = require('./app');
 
-dotenv.config({path: './config.env}'});
+dotenv.config({ path: './config.env' });
 
-console.log(process.env);
+mongoose
+  //.connect('mongodb://127.0.0.1/natours', {
+  .connect(process.env.DATABASE_LOCAL,{  
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useFindAndModify: false
+  })
+  .then(con => {
+    console.log('DB connection successfully');
+  });
 
-app.listen(port, ()=>{
-    console.log('app running on port ${port}...');
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+  console.log(`App running on port ${port}...`);
 });

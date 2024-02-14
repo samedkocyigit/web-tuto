@@ -9,3 +9,4 @@
 # After debugging folders
 target/
 build/
+node_modules
