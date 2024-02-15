@@ -21,29 +21,35 @@ mongoose
   // IMPORT DATA TO INTO DB
 
 const importData = async ()=>{
-    try{
-        await Tour.create(tours);
-        console.log('Data successfully loaded!');
-    }catch(err){
-        console.log(err);
-    }
-    process.exit();
-  };
+  try{
+    console.log(process.argv);
+
+    await Tour.create(tours);
+    console.log('Data successfully loaded!');
+  }
+  catch(err){
+    console.log(err);
+  }
+  process.exit();
+};
 
   // DELETE ALL DATA FROM DB
 const deleteData = async ()=>{
-    try{
-        await Tour.deleteMany();
-        console.log('Data successfully deleted!');
-    }catch(err){
-        console.log(err);
-    }
-    process.exit();
+  try{
+    console.log(process.argv);
+
+    await Tour.deleteMany();
+    console.log('Data successfully deleted!');
+  }
+  catch(err){
+    console.log(err);
+  }
+  process.exit();
 };
 
 if(process.argv[2]==='--import'){
-    importData();
+  importData();
 }
 else if(process.argv[2]==='--delete'){
-    deleteData();
+  deleteData();
 }
