@@ -1,8 +1,9 @@
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
-const app = require('./app');
 
 dotenv.config({ path: './config.env' });
+const app = require('./app');
+
 
 mongoose
   //.connect('mongodb://127.0.0.1/natours', {
@@ -11,7 +12,7 @@ mongoose
     useCreateIndex: true,
     useFindAndModify: false
   })
-  .then(con => {
+  .then(() => {
     console.log('DB connection successfully');
   });
 
