@@ -1,4 +1,4 @@
-const AppError = require("../utils/apiError");
+const AppError = require("../utils/appError");
 
 const handleCastErrorDB = err => {
     const message = `Invalid ${err.payh}: ${err.value}.`;
@@ -7,6 +7,8 @@ const handleCastErrorDB = err => {
 
 const handleDublicateErrorDB = err => {
     const value = err.errmsg.match(/(["'])(\\?.)*?\1/)[0];
+    //const value = err.keyValue.name;
+
     const message = `Duplicate field value ${value}. Please use another name`;
     return new AppError(message,401);
 };
@@ -47,20 +49,23 @@ const sendErrorProd = (err,res) =>{
     }
 }
 module.exports=(err,req,res,next)=>{
+
     err.statusCode = err.statusCode || 500;
     err.status= err.status || 'error';
     
     if(process.env.NODE_ENV ==='development'){
         sendErrorDev(err,res)         
     } else if (process.env.NODE_ENV==='production'){
-        let error ={...err};
+        let error = { ...err };
 
-        if(error.name==='CastError') error = handleCastErrorDB(error);
-        if(error.Code===11000) error=handleDublicateErrorDB(error);
-        if(error.name==='ValidationError')
-         error.handleValidationErrorDB(error); 
-        
+        console.log("semco\n")
+        console.log(error.name)
+
+        if(error.name === 'CastError') error = handleCastErrorDB(error);
+        if(error.Code === 11000) error=handleDublicateErrorDB(error);
+        if(error.name === 'ValidationError')
+         error=handleValidationErrorDB(error); 
+
         sendErrorProd(error,res)
-
     }
 }
