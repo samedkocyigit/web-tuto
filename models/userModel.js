@@ -9,7 +9,7 @@ const userSchema = new mongoose.Schema({
         required: [true,'A name must have user'],
         trim: true,
         maxLength:40,
-        minLength:8
+        minLength:2
     },
     email: {
         type: String,
@@ -19,6 +19,11 @@ const userSchema = new mongoose.Schema({
         validate: [validator.isEmail,'please provide a valid email']
     },
     photo: String,
+    role: {
+        type: String,
+        enum: ['user', 'guide', 'lead-guide', 'admin'],
+        default: 'user'
+    },
     password:{
         type:String,
         required: [true,'please provide a password'],
@@ -29,10 +34,10 @@ const userSchema = new mongoose.Schema({
         type:String,
         required: [true,'please provide a password'],
         validate: {
-          validator: function(el){
+            validator: function(el){
             return el === this.password
-          },
-          message:'Password are not the same!!!!'
+            },
+            message:'Password are not the same!!!!'
         }
     },
     passwordChangedAt: Date
