@@ -12,17 +12,10 @@ const filterObj= (obj , ...allowedFields)=>{
   return newObj
 }
 
-exports.getAllUsers =catchAsync(async (req, res) => {
-  const user =await User.find()
-  
-  res.status(200).json({
-    status: 'success',
-    result: user.lenght,
-    data:{
-      user
-    }
-  });
-});
+exports.getMe= (req,res,next)=>{
+  req.params.id = req.user.id
+  next()
+}
 
 exports.updatedMe = catchAsync(async (req,res,next) =>{
   // 1) create error if user posts password data
@@ -60,21 +53,9 @@ exports.deleteMe = catchAsync(async (req,res,next) =>{
   })
 })
 
-exports.getUser = catchAsync(async (req, res,next) => {
-  const user = User.findById(req.params.id)
-  
-  if(!user){
-    return next( new AppError('Invalid ID',404))
-  }
+exports.getAllUsers = factory.getAll(User)
+exports.getUser = factory.getOne(User)
 
-  res.status(200).json({
-    status: 'success',
-    data: {
-      user
-    }
-  });
-});
-
-//exports.createUser = factory.createOne(User)
+exports.createUser = factory.createOne(User)
 exports.updateUser = factory.updateOne(User)
 exports.deleteUser = factory.deleteOne(User) 

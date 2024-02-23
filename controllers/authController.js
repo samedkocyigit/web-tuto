@@ -49,7 +49,7 @@ exports.signup = catchAsync(async (req,res,next) =>{
   const token = signToken(newUser._id)
 })
 
-exports.login=catchAsync(async(req,res,next) => {
+exports.login = catchAsync(async(req,res,next) => {
   const {email,password} = req.body
 
   // 1) check if email and password exist
@@ -67,7 +67,7 @@ exports.login=catchAsync(async(req,res,next) => {
     // 3) if everything ok, send token client
   createSendToken(user,201,res)
 
-  const token  =signToken(user._id)
+  const token  = signToken(user._id)
    
   res.status(200).json({
     status:'success',
