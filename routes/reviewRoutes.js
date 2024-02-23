@@ -11,13 +11,19 @@ router
 .route("/")
 .get(reviewController.getAllReviews)
 .post(
-  authController.protect,
-  authController.restrictTo("user"),
+  authController.restrictTo("admin"),
   reviewController.setTourUserIds,
   reviewController.createReview)
 
   router.route("/:id")
-  .patch(reviewController.updateReview)
-  .delete(reviewController.deleteReview)
+  .get(reviewController.getReview)
+  .patch(
+    authController.protect,
+    authController.restrictTo('admin','user'),
+    reviewController.updateReview)
+  .delete(
+    authController.protect,
+    authController.restrictTo('admin','user'),
+    reviewController.deleteReview)
 
 module.exports = router 
