@@ -14,7 +14,10 @@ const app = require('./app');
 
 mongoose
   //.connect('mongodb://127.0.0.1/natours', {
-  .connect(process.env.DATABASE_LOCAL,{})
+  .connect(process.env.DATABASE_LOCAL,{
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   .then(() => {
     console.log('DB connection successfully');
   });
