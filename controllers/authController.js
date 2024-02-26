@@ -46,7 +46,6 @@ exports.signup = catchAsync(async (req,res,next) =>{
   })
 
   createSendToken(newUser,201,res)
-  const token = signToken(newUser._id)
 })
 
 exports.login = catchAsync(async(req,res,next) => {
