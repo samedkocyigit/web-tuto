@@ -23,9 +23,10 @@ mongoose
     console.log('DB connection successfully');
   });
 
+const hostname =process.env.LOCALHOST || '127.0.0.1'
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
-  console.log(`App running on port ${port}...`);
+  console.log(`Server Running , http://${hostname}:${port}/`);
 });
 
 process.on('unhandledRejection', err => {
